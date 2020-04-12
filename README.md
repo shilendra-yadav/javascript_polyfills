@@ -69,7 +69,7 @@ Reduce
 ```
 
 Debounce
-```
+```javascript
 var myDebounce = (cb, wait) => {
   let timeInterval;
   return function (...args){
@@ -82,7 +82,7 @@ var myDebounce = (cb, wait) => {
 
 Throttle 
 
-```
+```javascript
 var myThrottle = (cb, wait) => {
   let interval;
   return function (...args){
@@ -97,7 +97,7 @@ var myThrottle = (cb, wait) => {
 ```
 Promise 
 
-```
+```javascript
 const CustomPromise = function (cb){
     this.promiseChain = [];
     this.handleError = () => {};
