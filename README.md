@@ -71,11 +71,10 @@ Reduce
 Debounce
 ```javascript
 var myDebounce = (cb, wait) => {
-  let timeInterval;
+  let timer;
   return function (...args){
-    let context = this;
-    clearInterval(timeInterval);
-    timeInterval = setTimeout(cb.apply(context,args),wait);
+    clearTimeout(timer);
+    timer = setTimeout(() => cb.apply(this,args),wait);
   }
 }
 ```
@@ -84,13 +83,18 @@ Throttle
 
 ```javascript
 var myThrottle = (cb, wait) => {
-  let interval;
+  let timer = null;
+  let lastArgs;
   return function (...args){
-    let context = this;
-    if(!interval){ 
-      cb.apply(context, args);
-      interval = true
-      setTimeout(() => interval = false, wait)
+    if(!timer){ 
+      cb.apply(this, args);
+      timer = true;
+      setTimeout(() => {
+         timer = false;
+         if(lastArgs) cb.apply(this,lastArgs);
+      }, wait)
+    } else {
+      lastArgs = args
     }
   }
 }
